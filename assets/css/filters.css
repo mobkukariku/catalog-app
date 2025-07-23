@@ -19,6 +19,7 @@
 
 .search-input:focus {
     outline: none;
+
 }
 
 .rating-control {
@@ -32,6 +33,7 @@
 }
 
 #rating-value {
+
     min-width: 80px;
     font-size: 0.9rem;
 }
@@ -58,4 +60,59 @@
 .filter-group{
     display: flex;
     flex-direction: column;
+}
+
+.price-slider-container {
+    margin-top: 1.5rem;
+    padding: 0 0.5rem;
+}
+
+.price-slider {
+    position: relative;
+    height: 4px;
+    background: #ddd;
+    border-radius: 2px;
+    margin: 1.5rem 0;
+}
+
+.slider-track {
+    position: absolute;
+    height: 100%;
+    background: #4CAF50;
+    border-radius: 2px;
+    z-index: 1;
+}
+
+.price-range {
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    top: 0;
+    -webkit-appearance: none;
+    background: none;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.price-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    background: #81a942;
+    cursor: pointer;
+    border-radius: 50%;
+    pointer-events: auto;
+}
+
+.price-range::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: #81a942;
+    cursor: pointer;
+    border-radius: 50%;
+    pointer-events: auto;
+}
+
+.price-range:focus {
+    outline: none;
 }

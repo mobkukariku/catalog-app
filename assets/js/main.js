@@ -1,6 +1,7 @@
 import { initFilters } from './modules/filters.js';
 import { initSorting } from './modules/sort.js';
 import { renderProducts, updateShowingProducts } from './modules/products.js';
+import {initLazyLoading} from "./modules/lazyLoading.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     try {
@@ -9,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const data = await response.json();
         const allProducts = Array.isArray(data) ? data : data?.products || [];
-        
+
         if (!allProducts.length) {
             showEmptyMessage();
             return;
@@ -25,13 +26,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             renderProducts(productsToShow);
             updateShowingProducts(productsToShow);
+            initLazyLoading();
         }
 
         initFilters(allProducts, (filteredProducts) => {
             filterResult = filteredProducts;
             updateCatalog();
         }, { skipInitialRender: true });
-
 
         initSorting(allProducts, (_sortedProducts, newSortType) => {
             sortType = newSortType || 'default';
@@ -49,12 +50,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
+
+
 function showEmptyMessage() {
-    document.getElementById('products-container').innerHTML = 
+    document.getElementById('products-container').innerHTML =
         '<div class="empty">No products found</div>';
 }
 
 function showErrorMessage() {
-    document.getElementById('products-container').innerHTML = 
+    document.getElementById('products-container').innerHTML =
         '<div class="error">Failed to load products</div>';
 }

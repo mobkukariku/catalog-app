@@ -14,15 +14,8 @@
     <title>Catalog App</title>
 </head>
 <body>
-<header>
-    <div class="container">
-        <a href="/" class="logo">
-            LOGO
-        </a>
-    </div>
-</header>
 <main class="container">
-    <aside class="filters-layout" aria-label="Фильтры">
+    <aside class="filters-layout " aria-label="Фильтры">
         <h3>Filters</h3>
         <form id="filters-form">
             <div class="filter-group">
@@ -45,8 +38,14 @@
                     <span>-</span>
                     <input type="number" class="price-input" max="9999" placeholder="Max price">
                 </div>
+                <div class="price-slider-container">
+                    <div class="price-slider">
+                        <input type="range" class="price-range min-range" min="0" max="1000" step="10" value="0">
+                        <input type="range" class="price-range max-range" min="0" max="1000" step="10" value="1000">
+                        <div class="slider-track"></div>
+                    </div>
+                </div>
             </div>
-
             <div class="filter-group">
                 <h4>Categories</h4>
                 <div id="categories-container">
@@ -62,7 +61,7 @@
                 <label class="sort-showing">Showing <span id="show" >47 results</span></label>
             </section>
             <section class="sorting">
-                <label for="sort">Sort by:</label>
+                <label for="sort-select">Sort by:</label>
                 <select id="sort-select">
                     <option value="">Default</option>
                     <option value="price-asc">Price (Low to High)</option>

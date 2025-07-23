@@ -7,9 +7,15 @@ export function initFilters(products, renderCallback, options = {}) {
     const minPriceInput = document.querySelector('.price-input[min]');
     const maxPriceInput = document.querySelector('.price-input[max]');
     const categoriesContainer = document.getElementById('categories-container');
+    const priceRanges = document.querySelectorAll('.price-range');
+    const minPriceRange = priceRanges[0];
+    const maxPriceRange = priceRanges[1];
 
     let filterTimeout;
     const debounceDelay = 200;
+
+    minPriceRange.value = 0;
+    maxPriceRange.value = 1000;
 
     const categories = [...new Set(products.map(p => p.category))];
     categoriesContainer.innerHTML = categories.map(category => `
@@ -19,15 +25,34 @@ export function initFilters(products, renderCallback, options = {}) {
         </label>
     `).join('');
 
+    minPriceRange.addEventListener('input', () => {
+        minPriceInput.value = minPriceRange.value;
+        applyFilters();
+    });
+
+    maxPriceRange.addEventListener('input', () => {
+        maxPriceInput.value = maxPriceRange.value;
+        applyFilters();
+    });
+
+    // Обработчики для числовых инпутов
+    minPriceInput.addEventListener('input', () => {
+        minPriceRange.value = minPriceInput.value || 0;
+        applyFilters();
+    });
+
+    maxPriceInput.addEventListener('input', () => {
+        maxPriceRange.value = maxPriceInput.value || 1000;
+        applyFilters();
+    });
+
     ratingRange.addEventListener('input', () => {
         const value = parseFloat(ratingRange.value);
-        ratingValue.textContent = value === 0 ? 'Все оценки' : `от ${value.toFixed(1)}`;
+        ratingValue.textContent = value === 0 ? 'All ratings' : `from ${value.toFixed(1)}`;
         applyFilters();
     });
 
     searchInput.addEventListener('input', applyFilters);
-    minPriceInput.addEventListener('input', applyFilters);
-    maxPriceInput.addEventListener('input', applyFilters);
     form.addEventListener('change', applyFilters);
 
     function applyFilters() {
@@ -37,7 +62,7 @@ export function initFilters(products, renderCallback, options = {}) {
             const searchTerm = searchInput.value.toLowerCase();
             const minRating = parseFloat(ratingRange.value) || 0;
             const minPrice = parseFloat(minPriceInput.value) || 0;
-            const maxPrice = parseFloat(maxPriceInput.value) || Infinity;
+            const maxPrice = parseFloat(maxPriceInput.value) || 9999;
             const categoryCheckboxes = form.querySelectorAll('input[name="category"]:checked');
             const selectedCategories = Array.from(categoryCheckboxes).map(cb => cb.value);
 
@@ -61,5 +86,5 @@ export function initFilters(products, renderCallback, options = {}) {
         }, debounceDelay);
     }
 
-    if(!skipInitialRender) applyFilters()
+    if(!skipInitialRender) applyFilters();
 }

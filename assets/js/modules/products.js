@@ -15,13 +15,13 @@ export function renderProducts(productsToRender) {
             <div class="product-info">
                 <h3 class="product-title">${product.name}</h3>
                 <p class="product-description">${product.description}</p>
-                <p class="product-price">Price: <span>${product.price.toLocaleString()} ₽</span></p>
+                <p class="product-price">Price: <span>${product.price.toLocaleString()} $</span></p>
                 <p class="product-category">Category: <span>${product.category}</span></p>
                 <p class="product-rating">Rating: <span>${product.rating}/5</span></p>
             </div>
             <button class="add-to-cart">Add to cart</button>
         `;
-        
+
         card.style.opacity = '0';
         card.style.transform = 'translateY(20px)';
         card.style.transition = 'all 0.4s ease-out';
@@ -45,3 +45,4 @@ export function updateShowingProducts(products) {
     show.textContent = products.length;
 
 }
+
