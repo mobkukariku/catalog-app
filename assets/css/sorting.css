@@ -1,0 +1,41 @@
+.sorting-layout{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 20px 0px 20px;
+}
+
+.sorting-layout{
+    font-size: 24px;
+}
+
+.sorting {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 1rem 0;
+}
+
+
+.sorting select {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+
+    outline: none;
+
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 12px;
+}
+
+
+
+.sort-showing > span{
+    font-weight: 700;
+}
