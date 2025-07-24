@@ -15,7 +15,7 @@ export function initFilters(products, renderCallback, options = {}) {
     const debounceDelay = 200;
 
     minPriceRange.value = 0;
-    maxPriceRange.value = 1000;
+    maxPriceRange.value = 2000;
 
     const categories = [...new Set(products.map(p => p.category))];
     categoriesContainer.innerHTML = categories.map(category => `
@@ -35,7 +35,6 @@ export function initFilters(products, renderCallback, options = {}) {
         applyFilters();
     });
 
-    // Обработчики для числовых инпутов
     minPriceInput.addEventListener('input', () => {
         minPriceRange.value = minPriceInput.value || 0;
         applyFilters();
