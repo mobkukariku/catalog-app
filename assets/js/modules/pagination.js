@@ -1,5 +1,5 @@
 export const PAGINATION_CONFIG = {
-  itemsPerPage: 12,
+  itemsPerPage: 9,
   visiblePages: 5
 };
 
@@ -29,11 +29,9 @@ export function updatePagination(totalItems, updateCallback) {
   const prevBtn = paginationContainer.querySelector('.pagination-prev');
   const nextBtn = paginationContainer.querySelector('.pagination-next');
 
-  // Обновление состояния кнопок
   prevBtn.disabled = currentPage <= 1;
   nextBtn.disabled = currentPage >= totalPages;
 
-  // Генерация кнопок страниц
   paginationPages.innerHTML = '';
   const pages = generatePageNumbers(currentPage, totalPages);
   

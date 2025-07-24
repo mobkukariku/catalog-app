@@ -5,18 +5,28 @@ import { renderProducts, updateShowingProducts } from './products.js';
 import { initLazyLoading } from "./lazyLoading.js";
 import { ProductService } from '../services/productService.js';
 import { paginate, updatePagination, PAGINATION_CONFIG, getCurrentPage, setCurrentPage } from './pagination.js';
+import { ProductSearch } from './search.js';
 
 export class CatalogManager {
   constructor() {
     this.allProducts = [];
     this.filterResult = [];
     this.sortType = 'default';
+    this.productSearch = null;
   }
 
   async init() {
-     try {
+    try {
       this.allProducts = await ProductService.loadProducts();
       this.filterResult = [...this.allProducts];
+    
+      this.productSearch = new ProductSearch(
+        this.allProducts,
+        (selectedProduct) => {
+          this.handleSearchSelect(selectedProduct);
+        }
+      );
+      
       this.setupEventHandlers();
       this.initModules();
       this.updateCatalog();
@@ -29,6 +39,16 @@ export class CatalogManager {
     }
   }
 
+  handleSearchSelect(selectedProduct) {
+    this.filterResult = [selectedProduct];
+    setCurrentPage(1);
+    this.updateCatalog();
+    
+    const productElement = document.querySelector(`[data-id="${selectedProduct.id}"]`);
+    if (productElement) {
+      productElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
 
   initModules() {
     initFilters(this.allProducts, this.handleFilter.bind(this), { skipInitialRender: true });
@@ -91,7 +111,7 @@ export class CatalogManager {
     container?.replaceChildren(this.createMessageElement('empty', 'No products found'));
   }
 
-  showErrorMessage(error) {
+  handleError(error) {
     console.error('Failed to load products:', error);
     const container = document.getElementById('products-container');
     container?.replaceChildren(this.createMessageElement('error', 'Failed to load products'));

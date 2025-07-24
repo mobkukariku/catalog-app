@@ -1,3 +1,5 @@
+
+
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -91,16 +93,77 @@
 
 .product-price span {
     font-weight: bold;
-    margin-top: auto; /* Прижимаем цену к низу */
+    margin-top: auto; 
     padding-top: 0.5rem;
+}
+
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.star {
+  color: #d1d5db; 
+  font-size: 16px;
+  position: relative;
+}
+
+.star.filled {
+  color: #f59e0b; 
+}
+
+.star.half-filled {
+  color: #d1d5db; 
+}
+
+.star.half-filled::before {
+  content: '★';
+  position: absolute;
+  left: 0;
+  width: 50%;
+  overflow: hidden;
+  color: #f59e0b; 
+}
+
+.rating-value {
+  font-size: 12px;
+  color: var(--secondary);
+  margin-left: 2px;
+}
+
+
+@media (max-width: 1400px) {
+    .products-layout {
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* Адаптивные колонки, но рассчитанные на 2 колонки */
+    }
+}
+@media (max-width: 1024px) {
+    .products-layout {
+        grid-template-columns: repeat(2, 1fr); /* Всегда 2 колонки на экране до 1024px */
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+    .product-card {
+        padding: 0.8rem;
+    }
 }
 
 @media (max-width: 768px) {
     .products-layout {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    }
-
-    .product-image {
-        height: 160px;
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 1rem;
+        padding: 1rem;
     }
 }
+
+@media (max-width: 480px) {
+    .products-layout {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        justify-items: center;
+    }
+    
+}
+

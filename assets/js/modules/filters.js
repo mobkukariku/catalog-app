@@ -15,7 +15,7 @@ export function initFilters(products, renderCallback, options = {}) {
     const debounceDelay = 200;
 
     minPriceRange.value = 0;
-    maxPriceRange.value = 2000;
+    maxPriceRange.value = 3000;
 
     const categories = [...new Set(products.map(p => p.category))];
     categoriesContainer.innerHTML = categories.map(category => `

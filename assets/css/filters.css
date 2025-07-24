@@ -3,7 +3,14 @@
     border-radius: 20px;
     background: #f5f5f5;
     padding: 10px 20px 30px;
+    
     height: fit-content;
+}
+
+.search-container {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto 30px;
 }
 
 
@@ -18,8 +25,45 @@
 }
 
 .search-input:focus {
-    outline: none;
+  outline: none;
+  border-color: #4CAF50;
+}
 
+
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 400px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 0 0 10px 10px;
+  z-index: 1000;
+  display: none;
+  margin-top: 5px;
+}
+
+
+
+.search-dropdown.show {
+  display: block;
+}
+
+
+.search-item {
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.search-item:hover {
+  background: #f5f5f5;
+}
+
+.search-highlight {
+  font-weight: bold;
+  color: #4CAF50;
 }
 
 .rating-control {
@@ -115,4 +159,13 @@
 
 .price-range:focus {
     outline: none;
+}
+
+
+
+
+@media (max-width: 768px) {
+    .filters-layout{
+        display: none;
+    }  
 }
