@@ -11,7 +11,7 @@ a {
 }
 
 header{
-    margin: 20px 0;
+    margin: 20px 10px;
     width: 100%;
 
 }
@@ -30,6 +30,7 @@ main{
 }
 
 .desktop-header {
+    margin: 20px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -40,5 +41,10 @@ main{
 @media (max-width: 768px) {
     .desktop-header {
         display: none;
+    }
+
+    .logo{
+        font-size: 20px;
+        font-weight: 600;
     }
 }
