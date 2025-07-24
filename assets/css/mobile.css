@@ -87,7 +87,7 @@
 
 }
 
-.apply-filters {
+.apply-filter, .apply-sort {
   width: 100%;
   padding: 12px;
   background: #000;
@@ -98,19 +98,38 @@
   cursor: pointer;
 }
 
-@media (max-width: 768px) {
-  .mobile-controls {
-    display: flex;
-  }
-  
-  .filters-layout {
-    display: none;
-  }
-  
-  .sorting-layout .sorting {
-    display: none;
-  }
+/* Модальное окно сортировки */
+.mobile-sort-modal {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 20px;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    max-height: 50vh;
+    overflow-y: auto;
 }
+
+.mobile-sort-modal.active {
+    transform: translateY(0);
+}
+
+.mobile-sort-select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+
 
 
 @media (max-width: 768px) {
@@ -139,4 +158,23 @@
         cursor: pointer;
     }
     
+    .sorting-layout .sorting {
+        display: none;
+    }
+    
+    .mobile-sort-btn {
+        display: flex; /* Показываем кнопку сортировки */
+    }
+
+    .mobile-controls {
+        display: flex;
+    }
+  
+    .filters-layout {
+        display: none;
+    }
+    
+    .sorting-layout .sorting {
+        display: none;
+    }
 }

@@ -11,14 +11,13 @@ export function initFilters(products, renderCallback, options = {}) {
     const minPriceRange = priceRanges[0];
     const maxPriceRange = priceRanges[1];
 
-    // Создаем модальное окно для мобильной версии
+
     const modalOverlay = document.createElement('div');
     modalOverlay.className = 'modal-overlay';
     
     const filtersModal = document.createElement('div');
     filtersModal.className = 'mobile-filters-modal';
     
-    // Сохраняем ссылки на элементы формы
     const formElements = {
         searchInput: searchInput.cloneNode(true),
         ratingRange: ratingRange.cloneNode(true),
@@ -29,11 +28,9 @@ export function initFilters(products, renderCallback, options = {}) {
         priceRanges: [minPriceRange.cloneNode(true), maxPriceRange.cloneNode(true)]
     };
     
-    // Создаем копию формы для модального окна
     const formClone = form.cloneNode(true);
     formClone.innerHTML = form.innerHTML;
     
-    // Обновляем элементы в клоне формы
     const modalSearchInput = formClone.querySelector('.search-input');
     const modalRatingRange = formClone.querySelector('#rating-range');
     const modalRatingValue = formClone.querySelector('#rating-value');
@@ -44,7 +41,6 @@ export function initFilters(products, renderCallback, options = {}) {
     const modalMinPriceRange = modalPriceRanges[0];
     const modalMaxPriceRange = modalPriceRanges[1];
     
-    // Копируем значения из оригинальной формы
     modalSearchInput.value = searchInput.value;
     modalRatingRange.value = ratingRange.value;
     modalMinPriceInput.value = minPriceInput.value;
@@ -70,9 +66,7 @@ export function initFilters(products, renderCallback, options = {}) {
     document.body.appendChild(modalOverlay);
     document.body.appendChild(filtersModal);
     
-    // Синхронизация значений между оригинальной формой и модальной
     function syncFormValues() {
-        // Из модальной в оригинальную
         searchInput.value = modalSearchInput.value;
         ratingRange.value = modalRatingRange.value;
         minPriceInput.value = modalMinPriceInput.value;
@@ -80,12 +74,10 @@ export function initFilters(products, renderCallback, options = {}) {
         minPriceRange.value = modalMinPriceRange.value;
         maxPriceRange.value = modalMaxPriceRange.value;
         
-        // Обновляем текст рейтинга
         const value = parseFloat(modalRatingRange.value);
         ratingValue.textContent = value === 0 ? 'All ratings' : `from ${value.toFixed(1)}`;
         modalRatingValue.textContent = value === 0 ? 'All ratings' : `from ${value.toFixed(1)}`;
         
-        // Синхронизация категорий
         const originalCheckboxes = form.querySelectorAll('input[name="category"]');
         const modalCheckboxes = formClone.querySelectorAll('input[name="category"]');
         
@@ -94,9 +86,7 @@ export function initFilters(products, renderCallback, options = {}) {
         });
     }
     
-    // Обработчики для мобильной версии
     document.querySelector('.mobile-filter-btn')?.addEventListener('click', () => {
-        // Синхронизируем значения перед открытием
         modalSearchInput.value = searchInput.value;
         modalRatingRange.value = ratingRange.value;
         modalMinPriceInput.value = minPriceInput.value;
@@ -123,14 +113,12 @@ export function initFilters(products, renderCallback, options = {}) {
     modalOverlay.addEventListener('click', closeModal);
     filtersModal.querySelector('.close-modal').addEventListener('click', closeModal);
     
-    // Применяем фильтры из модального окна
     filtersModal.querySelector('.apply-filters').addEventListener('click', () => {
         syncFormValues();
         applyFilters();
         closeModal();
     });
 
-    // Обработчики событий для модальной формы
     modalMinPriceRange.addEventListener('input', () => {
         modalMinPriceInput.value = modalMinPriceRange.value;
     });
@@ -152,7 +140,6 @@ export function initFilters(products, renderCallback, options = {}) {
         modalRatingValue.textContent = value === 0 ? 'All ratings' : `from ${value.toFixed(1)}`;
     });
 
-    // Остальной код остается без изменений
     let filterTimeout;
     const debounceDelay = 200;
 
@@ -169,7 +156,6 @@ export function initFilters(products, renderCallback, options = {}) {
         </label>
     `).join('');
     
-    // Копируем категории в модальное окно
     modalCategoriesContainer.innerHTML = categoriesContainer.innerHTML;
 
     minPriceRange.addEventListener('input', () => {
