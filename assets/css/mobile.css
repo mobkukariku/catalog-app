@@ -138,6 +138,7 @@
         justify-content: space-between;
         align-items: center;
         margin: 10px 20px;
+        box-sizing: border-box;
     }
     
     .mobile-header-icons {
@@ -164,7 +165,7 @@
     }
     
     .mobile-sort-btn {
-        display: flex; /* Показываем кнопку сортировки */
+        display: flex; 
     }
 
     .mobile-controls {
