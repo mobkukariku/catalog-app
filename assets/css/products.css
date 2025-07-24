@@ -150,6 +150,7 @@
     .products-layout {
         grid-template-columns: repeat(2, 1fr); 
         gap: 1rem;
+        width: 100%;
         padding: 1rem;
     }
 }
@@ -158,6 +159,7 @@
     .products-layout {
         grid-template-columns: 1fr;
         gap: 0.5rem;
+        width: 100%;
         padding: 0.5rem;
         justify-items: center;
     }

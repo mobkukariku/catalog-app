@@ -18,6 +18,7 @@
 
 .mobile-header {
     display: none;
+
 }
 
 
@@ -98,7 +99,6 @@
   cursor: pointer;
 }
 
-/* Модальное окно сортировки */
 .mobile-sort-modal {
     position: fixed;
     bottom: 0;
@@ -137,7 +137,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin: 10px 0;
+        margin: 10px 20px;
     }
     
     .mobile-header-icons {
