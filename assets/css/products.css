@@ -39,10 +39,7 @@
 
 
 
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
+
 
 .add-to-cart {
     width: calc(100% - 3rem);
@@ -135,12 +132,12 @@
 
 @media (max-width: 1400px) {
     .products-layout {
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* Адаптивные колонки, но рассчитанные на 2 колонки */
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
     }
 }
 @media (max-width: 1024px) {
     .products-layout {
-        grid-template-columns: repeat(2, 1fr); /* Всегда 2 колонки на экране до 1024px */
+        grid-template-columns: repeat(2, 1fr); 
         gap: 1.5rem;
         padding: 1.5rem;
     }

@@ -11,11 +11,155 @@ export function initFilters(products, renderCallback, options = {}) {
     const minPriceRange = priceRanges[0];
     const maxPriceRange = priceRanges[1];
 
+    // Создаем модальное окно для мобильной версии
+    const modalOverlay = document.createElement('div');
+    modalOverlay.className = 'modal-overlay';
+    
+    const filtersModal = document.createElement('div');
+    filtersModal.className = 'mobile-filters-modal';
+    
+    // Сохраняем ссылки на элементы формы
+    const formElements = {
+        searchInput: searchInput.cloneNode(true),
+        ratingRange: ratingRange.cloneNode(true),
+        ratingValue: ratingValue.cloneNode(true),
+        minPriceInput: minPriceInput.cloneNode(true),
+        maxPriceInput: maxPriceInput.cloneNode(true),
+        categoriesContainer: categoriesContainer.cloneNode(true),
+        priceRanges: [minPriceRange.cloneNode(true), maxPriceRange.cloneNode(true)]
+    };
+    
+    // Создаем копию формы для модального окна
+    const formClone = form.cloneNode(true);
+    formClone.innerHTML = form.innerHTML;
+    
+    // Обновляем элементы в клоне формы
+    const modalSearchInput = formClone.querySelector('.search-input');
+    const modalRatingRange = formClone.querySelector('#rating-range');
+    const modalRatingValue = formClone.querySelector('#rating-value');
+    const modalMinPriceInput = formClone.querySelector('.price-input[min]');
+    const modalMaxPriceInput = formClone.querySelector('.price-input[max]');
+    const modalCategoriesContainer = formClone.querySelector('#categories-container');
+    const modalPriceRanges = formClone.querySelectorAll('.price-range');
+    const modalMinPriceRange = modalPriceRanges[0];
+    const modalMaxPriceRange = modalPriceRanges[1];
+    
+    // Копируем значения из оригинальной формы
+    modalSearchInput.value = searchInput.value;
+    modalRatingRange.value = ratingRange.value;
+    modalMinPriceInput.value = minPriceInput.value;
+    modalMaxPriceInput.value = maxPriceInput.value;
+    modalMinPriceRange.value = minPriceRange.value;
+    modalMaxPriceRange.value = maxPriceRange.value;
+    
+    filtersModal.innerHTML = `
+        <div class="modal-header">
+            <h3>Filters</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-content">
+        </div>
+        <div class="modal-footer">
+            <button class="apply-filters">Apply Filters</button>
+        </div>
+    `;
+    
+    const modalContent = filtersModal.querySelector('.modal-content');
+    modalContent.appendChild(formClone);
+    
+    document.body.appendChild(modalOverlay);
+    document.body.appendChild(filtersModal);
+    
+    // Синхронизация значений между оригинальной формой и модальной
+    function syncFormValues() {
+        // Из модальной в оригинальную
+        searchInput.value = modalSearchInput.value;
+        ratingRange.value = modalRatingRange.value;
+        minPriceInput.value = modalMinPriceInput.value;
+        maxPriceInput.value = modalMaxPriceInput.value;
+        minPriceRange.value = modalMinPriceRange.value;
+        maxPriceRange.value = modalMaxPriceRange.value;
+        
+        // Обновляем текст рейтинга
+        const value = parseFloat(modalRatingRange.value);
+        ratingValue.textContent = value === 0 ? 'All ratings' : `from ${value.toFixed(1)}`;
+        modalRatingValue.textContent = value === 0 ? 'All ratings' : `from ${value.toFixed(1)}`;
+        
+        // Синхронизация категорий
+        const originalCheckboxes = form.querySelectorAll('input[name="category"]');
+        const modalCheckboxes = formClone.querySelectorAll('input[name="category"]');
+        
+        modalCheckboxes.forEach((checkbox, index) => {
+            originalCheckboxes[index].checked = checkbox.checked;
+        });
+    }
+    
+    // Обработчики для мобильной версии
+    document.querySelector('.mobile-filter-btn')?.addEventListener('click', () => {
+        // Синхронизируем значения перед открытием
+        modalSearchInput.value = searchInput.value;
+        modalRatingRange.value = ratingRange.value;
+        modalMinPriceInput.value = minPriceInput.value;
+        modalMaxPriceInput.value = maxPriceInput.value;
+        modalMinPriceRange.value = minPriceRange.value;
+        modalMaxPriceRange.value = maxPriceRange.value;
+        
+        const originalCheckboxes = form.querySelectorAll('input[name="category"]');
+        const modalCheckboxes = formClone.querySelectorAll('input[name="category"]');
+        
+        originalCheckboxes.forEach((checkbox, index) => {
+            modalCheckboxes[index].checked = checkbox.checked;
+        });
+        
+        modalOverlay.classList.add('active');
+        filtersModal.classList.add('active');
+    });
+    
+    function closeModal() {
+        modalOverlay.classList.remove('active');
+        filtersModal.classList.remove('active');
+    }
+    
+    modalOverlay.addEventListener('click', closeModal);
+    filtersModal.querySelector('.close-modal').addEventListener('click', closeModal);
+    
+    // Применяем фильтры из модального окна
+    filtersModal.querySelector('.apply-filters').addEventListener('click', () => {
+        syncFormValues();
+        applyFilters();
+        closeModal();
+    });
+
+    // Обработчики событий для модальной формы
+    modalMinPriceRange.addEventListener('input', () => {
+        modalMinPriceInput.value = modalMinPriceRange.value;
+    });
+
+    modalMaxPriceRange.addEventListener('input', () => {
+        modalMaxPriceInput.value = modalMaxPriceRange.value;
+    });
+
+    modalMinPriceInput.addEventListener('input', () => {
+        modalMinPriceRange.value = modalMinPriceInput.value || 0;
+    });
+
+    modalMaxPriceInput.addEventListener('input', () => {
+        modalMaxPriceRange.value = modalMaxPriceInput.value || 1000;
+    });
+
+    modalRatingRange.addEventListener('input', () => {
+        const value = parseFloat(modalRatingRange.value);
+        modalRatingValue.textContent = value === 0 ? 'All ratings' : `from ${value.toFixed(1)}`;
+    });
+
+    // Остальной код остается без изменений
     let filterTimeout;
     const debounceDelay = 200;
 
     minPriceRange.value = 0;
     maxPriceRange.value = 3000;
+    modalMinPriceRange.value = 0;
+    modalMaxPriceRange.value = 3000;
 
     const categories = [...new Set(products.map(p => p.category))];
     categoriesContainer.innerHTML = categories.map(category => `
@@ -24,6 +168,9 @@ export function initFilters(products, renderCallback, options = {}) {
             ${category}
         </label>
     `).join('');
+    
+    // Копируем категории в модальное окно
+    modalCategoriesContainer.innerHTML = categoriesContainer.innerHTML;
 
     minPriceRange.addEventListener('input', () => {
         minPriceInput.value = minPriceRange.value;

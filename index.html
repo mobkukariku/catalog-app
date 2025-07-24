@@ -12,9 +12,36 @@
     <link rel="stylesheet" href="/assets/css/products.css">
     <link rel="stylesheet" href="/assets/css/sorting.css">
     <link rel="stylesheet" href="/assets/css/pagination.css">
+    <link rel="stylesheet" href="/assets/css/mobile.css">
     <title>Catalog App</title>
 </head>
 <body>
+    <header>
+        <div class="desktop-header container">
+            <div class="logo">
+                <a href="/index.html">Catalog App</a>
+            </div>
+        </div> 
+
+
+        <div class="mobile-header">
+            <div class="logo">
+                <a href="/index.html">CA</a>
+            </div>
+            <div class="mobile-header-icons">
+                  <div class="filter-icon-container">
+                    <button class="mobile-filter-btn">
+                        <img src="/assets/images/filter.svg" alt="Filter">
+                    </button>
+                  </div>
+                <div class="sort-icon-container">
+                    <button class="mobile-sort-btn">
+                        <img src="/assets/images/sort.svg" alt="Sort">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
 <main class="container">
     <aside class="filters-layout " aria-label="Фильтры">
         <h3>Filters</h3>
@@ -45,8 +72,8 @@
                 </div>
                 <div class="price-slider-container">
                     <div class="price-slider">
-                        <input type="range" class="price-range min-range" min="0" max="2000" step="10" value="0">
-                        <input type="range" class="price-range max-range" min="0" max="2000" step="10" value="2000">
+                        <input type="range" class="price-range min-range" min="0" max="3000" step="10" value="0">
+                        <input type="range" class="price-range max-range" min="0" max="3000" step="10" value="3000">
                         <div class="slider-track"></div>
                     </div>
                 </div>
@@ -58,9 +85,7 @@
             </div>
         </form>
     </aside>
-
     <div class="catalog-layout">
-
         <div class="sorting-layout">
             <section>
                 <label class="sort-showing">Showing <span id="show" >47 results</span></label>

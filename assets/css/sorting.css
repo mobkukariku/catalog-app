@@ -39,3 +39,11 @@
 .sort-showing > span{
     font-weight: 700;
 }
+
+
+@media (max-width: 768px) {
+    .sorting-layout {
+        display:none;
+    }
+    
+}

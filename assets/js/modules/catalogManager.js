@@ -1,4 +1,3 @@
-// modules/catalogManager.js
 import { initFilters } from './filters.js';
 import { initSorting } from './sort.js';
 import { renderProducts, updateShowingProducts } from './products.js';
@@ -89,6 +88,7 @@ export class CatalogManager {
     this.sortType = newSortType || 'default';
     setCurrentPage(1);
     this.updateCatalog();
+
   }
 
   updateCatalog() {
@@ -104,6 +104,11 @@ export class CatalogManager {
     updateShowingProducts(productsToShow);
     updatePagination(productsToShow.length, () => this.updateCatalog());
     initLazyLoading();
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
   }
 
   showEmptyMessage() {
